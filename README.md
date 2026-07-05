@@ -20,6 +20,16 @@ Then build and run:
 dotnet run --project src/AlvorPong
 ```
 
+For Visual Studio, generate the local development solution that includes
+AlvorKit under the `Engine` solution folder:
+
+```
+dotnet run --project ../AlvorKit/scripts/AlvorKit.Script.DevSolution
+```
+
+Open `AlvorPong.Dev.slnx` after generation. The file is ignored because it is
+derived from `AlvorPong.slnx` and the sibling `../AlvorKit/AlvorKit.slnx`.
+
 A fresh AlvorKit clone works without any codegen step — its pinned generated binding packages
 restore from nuget.org, and native DLLs flow into AlvorPong's output through the NuGet runtimes
 targets. If AlvorKit's `out/bindgen` or `out/mathgen` exist, those local projects are used instead
