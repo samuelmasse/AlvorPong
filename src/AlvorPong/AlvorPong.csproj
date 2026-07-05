@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\AlvorPong.Menus\AlvorPong.Menus.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="AlvorPong.App" />
+        <Using Include="AlvorPong.Menus" />
+    </ItemGroup>
+
+</Project>
