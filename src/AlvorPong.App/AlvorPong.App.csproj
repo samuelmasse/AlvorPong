@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+    <PropertyGroup>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
     <ItemGroup>
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Engine.Loop\AlvorKit.Engine.Loop.csproj" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Graphics2D.Fonts\AlvorKit.Graphics2D.Fonts.csproj" />
@@ -9,8 +13,10 @@
 
     <ItemGroup>
         <Using Include="AlvorKit.ECS" />
+        <Using Include="AlvorKit.MiniAudio" />
         <Using Include="AlvorKit.UI" />
         <Using Include="AlvorKit.UI.Blend" />
+        <Using Include="System.Runtime.InteropServices" />
     </ItemGroup>
 
 </Project>

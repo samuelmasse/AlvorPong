@@ -9,6 +9,13 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Content Include="..\..\res\Audio\*.mp3;..\..\res\Audio\*.ogg;..\..\res\Audio\*.wav">
+            <Link>Audio\%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
         <Using Include="AlvorPong.App" />
         <Using Include="AlvorPong.Menus" />
     </ItemGroup>

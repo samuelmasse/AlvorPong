@@ -12,6 +12,7 @@ public class MatchState(
     RootState state,
     RootUi ui,
     RootUiScript uiScript,
+    AppAudio audio,
     AppPauseMenu pauseMenu,
     AppStyle s,
     MatchScope scope,
@@ -27,13 +28,18 @@ public class MatchState(
     private bool paused;
     private bool cursorHidden;
     private double cursorIdleSeconds;
+    private int serveSecondsLeft;
     private Vec2 cursorPosition;
 
-    public override void Load() => screen.Title = "AlvorPong - Match";
+    public override void Load()
+    {
+        screen.Title = "AlvorPong - Match";
+        StartServeCountdownSound();
+    }
 
     public override void Unload()
     {
-        HidePauseMenu();
+        HidePauseMenu(playSound: false);
         ShowCursor();
     }
 
@@ -52,14 +58,25 @@ public class MatchState(
         if (paused)
             return;
 
-        if (field.Step(delta, controls.LeftAxis(), controls.RightAxis()) is not { } scorer)
+        var scorer = field.Step(delta, controls.LeftAxis(), controls.RightAxis(), out var events);
+        PlayFieldEvents(events);
+        UpdateServeCountdownSound();
+
+        if (scorer is not { } side)
             return;
 
-        score.Add(scorer);
+        audio.Play(AppSound.PointScored);
+        score.Add(side);
         if (score.Winner != null)
+        {
+            audio.Play(MatchOverSound());
             state.Current = scope.New<MatchOverState>();
+        }
         else
-            field.Reset(towards: scorer == MatchSide.Left ? MatchSide.Right : MatchSide.Left);
+        {
+            field.Reset(towards: side == MatchSide.Left ? MatchSide.Right : MatchSide.Left);
+            StartServeCountdownSound();
+        }
     }
 
     public override void Draw() => renderer.Draw();
@@ -68,19 +85,23 @@ public class MatchState(
 
     private void ShowPauseMenu()
     {
+        audio.Play(AppSound.PauseIn);
         paused = true;
         scripts.Add(uiScript);
         pauseNode = Node(ui)
             .SizeRelativeV((1, 1));
         {
-            pauseMenu.Create(pauseNode, new AppPauseView(config, score, HidePauseMenu));
+            pauseMenu.Create(pauseNode, new AppPauseView(config, score, () => HidePauseMenu()));
         }
     }
 
-    private void HidePauseMenu()
+    private void HidePauseMenu(bool playSound = true)
     {
         if (!paused)
             return;
+
+        if (playSound)
+            audio.Play(AppSound.PauseOut);
 
         paused = false;
         NodesRemove(ui, pauseNode);
@@ -121,4 +142,41 @@ public class MatchState(
         cursorHidden = true;
         input.CursorMode = CursorMode.Hidden;
     }
+
+    private void StartServeCountdownSound()
+    {
+        if (!field.IsServing)
+            return;
+
+        serveSecondsLeft = field.ServeSecondsLeft;
+        audio.Play(AppSound.CountdownTick);
+    }
+
+    private void UpdateServeCountdownSound()
+    {
+        if (!field.IsServing)
+            return;
+
+        var next = field.ServeSecondsLeft;
+        if (next == serveSecondsLeft)
+            return;
+
+        serveSecondsLeft = next;
+        audio.Play(AppSound.CountdownTick);
+    }
+
+    private void PlayFieldEvents(MatchFieldEvents events)
+    {
+        if ((events & MatchFieldEvents.ServeLaunch) != 0)
+            audio.Play(AppSound.ServeLaunch);
+        if ((events & MatchFieldEvents.WallBounce) != 0)
+            audio.Play(AppSound.WallBounce);
+        if ((events & MatchFieldEvents.PaddleSlice) != 0)
+            audio.Play(AppSound.PaddleSlice);
+        else if ((events & MatchFieldEvents.PaddleHit) != 0)
+            audio.Play(AppSound.PaddleHit);
+    }
+
+    private AppSound MatchOverSound() =>
+        config.RightIsAi && score.Winner == MatchSide.Right ? AppSound.MatchLoss : AppSound.MatchWin;
 }

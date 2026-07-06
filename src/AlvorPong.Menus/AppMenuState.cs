@@ -9,6 +9,7 @@ public class AppMenuState(
     RootScripts scripts,
     RootUi ui,
     RootUiScript uiScript,
+    AppAudio audio,
     AppMainMenu menu,
     AppMatchStart matchStart,
     AppStyle s) : State
@@ -38,11 +39,20 @@ public class AppMenuState(
     public override void Update(double delta)
     {
         if (keyboard.IsKeyPressed(Keys.Enter))
+        {
+            audio.Play(AppSound.MenuConfirm);
             matchStart.Run(new MatchConfig(RightIsAi: true));
+        }
         if (keyboard.IsKeyPressed(Keys.T))
+        {
+            audio.Play(AppSound.MenuConfirm);
             matchStart.Run(new MatchConfig(RightIsAi: false));
+        }
         if (keyboard.IsKeyPressed(Keys.Escape))
+        {
+            audio.Play(AppSound.MenuConfirm);
             screen.Close();
+        }
     }
 
     public override void Render() => backbuffer.Clear(s.Palette.AppBackground);

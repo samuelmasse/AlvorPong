@@ -8,6 +8,7 @@ public class MatchOverState(
     RootScripts scripts,
     RootUi ui,
     RootUiScript uiScript,
+    AppAudio audio,
     AppGameOverMenu menu,
     AppMatchStart matchStart,
     AppMenuReturn menuReturn,
@@ -38,9 +39,15 @@ public class MatchOverState(
     public override void Update(double delta)
     {
         if (keyboard.IsKeyPressed(Keys.Enter))
+        {
+            audio.Play(AppSound.MenuConfirm);
             matchStart.Run(config);
+        }
         if (keyboard.IsKeyPressed(Keys.Escape))
+        {
+            audio.Play(AppSound.MenuConfirm);
             menuReturn.Run();
+        }
     }
 
     public override void Draw() => renderer.Draw();

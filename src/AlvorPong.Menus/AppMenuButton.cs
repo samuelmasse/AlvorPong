@@ -2,7 +2,7 @@ namespace AlvorPong.Menus;
 
 /// <summary>Builds full-width Blend menu buttons with an optional display-only key chip.</summary>
 [App]
-public class AppMenuButton(AppStyle s)
+public class AppMenuButton(AppAudio audio, AppStyle s)
 {
     private const float KeyChipInset = 4f;
 
@@ -13,7 +13,11 @@ public class AppMenuButton(AppStyle s)
             .SizeTextRelativeV((0, 0))
             .SizeRelativeV((1, 0))
             .TextV(text)
-            .OnClickF(onClick);
+            .OnClickF(() =>
+            {
+                audio.Play(AppSound.MenuConfirm);
+                onClick();
+            });
 
         if (key != null)
         {

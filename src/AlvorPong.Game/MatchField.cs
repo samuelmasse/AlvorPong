@@ -22,6 +22,7 @@ public class MatchField
     private const float SliceSpeedup = 0.06f;
     private const float MaxBounceAngle = 1.0f;
     private const float SliceAngle = 0.35f;
+    private const float SliceSoundThreshold = 0.45f;
     private const float MaxShotAngle = 1.2f;
     private const float ServeAngle = 0.45f;
     private const double ServeDelay = 3.0;
@@ -84,8 +85,9 @@ public class MatchField
     }
 
     /// <summary>Advances the simulation one tick and returns the side that scored, if any.</summary>
-    public MatchSide? Step(double delta, float leftAxis, float rightAxis)
+    public MatchSide? Step(double delta, float leftAxis, float rightAxis, out MatchFieldEvents events)
     {
+        events = MatchFieldEvents.None;
         float dt = (float)delta;
 
         LeftPaddleY = MovePaddle(LeftPaddleY, leftAxis, dt, out float leftVelocity);
@@ -97,15 +99,18 @@ public class MatchField
         {
             serveCountdown -= delta;
             if (serveCountdown <= 0)
+            {
                 Serve();
+                events |= MatchFieldEvents.ServeLaunch;
+            }
             return null;
         }
 
         var previous = BallPosition;
         BallPosition += BallVelocity * dt;
 
-        BounceOffPaddle(previous, dt);
-        ReflectOffFieldEdges();
+        events |= BounceOffPaddle(previous, dt);
+        events |= ReflectOffFieldEdges();
 
         if (BallPosition.X < -BallSize)
             return MatchSide.Right;
@@ -129,21 +134,22 @@ public class MatchField
     }
 
     /// <summary>Sweeps the ball's motion against the facing paddle plane so fast balls cannot tunnel through.</summary>
-    private void BounceOffPaddle(Vec2 previous, float dt)
+    private MatchFieldEvents BounceOffPaddle(Vec2 previous, float dt)
     {
         if (BallVelocity.X < 0)
-            TrySweptBounce(previous, dt, LeftContactX, LeftPaddleY, LeftPaddleVelocity, 1f);
-        else if (BallVelocity.X > 0)
-            TrySweptBounce(previous, dt, RightContactX, RightPaddleY, RightPaddleVelocity, -1f);
+            return TrySweptBounce(previous, dt, LeftContactX, LeftPaddleY, LeftPaddleVelocity, 1f);
+        if (BallVelocity.X > 0)
+            return TrySweptBounce(previous, dt, RightContactX, RightPaddleY, RightPaddleVelocity, -1f);
+        return MatchFieldEvents.None;
     }
 
-    private void TrySweptBounce(Vec2 previous, float dt, float faceX, float paddleCenter, float paddleVelocity, float outDirection)
+    private MatchFieldEvents TrySweptBounce(Vec2 previous, float dt, float faceX, float paddleCenter, float paddleVelocity, float outDirection)
     {
         bool crossed = outDirection > 0
             ? previous.X >= faceX && BallPosition.X < faceX
             : previous.X <= faceX && BallPosition.X > faceX;
         if (!crossed)
-            return;
+            return MatchFieldEvents.None;
 
         float travel = BallPosition.X - previous.X;
         float t = travel == 0 ? 0f : (faceX - previous.X) / travel;
@@ -151,7 +157,7 @@ public class MatchField
 
         float offset = (crossY - paddleCenter) / PaddleReach;
         if (MathF.Abs(offset) > 1f)
-            return;
+            return MatchFieldEvents.None;
 
         float slice = Math.Clamp(paddleVelocity / PaddleSpeed, -1f, 1f);
         float angle = ShotAngle(offset, slice);
@@ -160,17 +166,21 @@ public class MatchField
 
         float remaining = (1f - t) * dt;
         BallPosition = new Vec2(faceX, crossY) + BallVelocity * remaining;
+
+        return MathF.Abs(slice) >= SliceSoundThreshold ? MatchFieldEvents.PaddleSlice : MatchFieldEvents.PaddleHit;
     }
 
     /// <summary>Reflects both velocity and overshoot position off the top and bottom field edges.</summary>
-    private void ReflectOffFieldEdges()
+    private MatchFieldEvents ReflectOffFieldEdges()
     {
+        var events = MatchFieldEvents.None;
         float half = BallSize / 2;
 
         if (BallPosition.Y < half && BallVelocity.Y < 0)
         {
             BallPosition = (BallPosition.X, half + (half - BallPosition.Y));
             BallVelocity = (BallVelocity.X, -BallVelocity.Y);
+            events |= MatchFieldEvents.WallBounce;
         }
 
         float bottom = Height - half;
@@ -178,6 +188,9 @@ public class MatchField
         {
             BallPosition = (BallPosition.X, bottom - (BallPosition.Y - bottom));
             BallVelocity = (BallVelocity.X, -BallVelocity.Y);
+            events |= MatchFieldEvents.WallBounce;
         }
+
+        return events;
     }
 }
