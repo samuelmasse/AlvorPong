@@ -47,12 +47,14 @@ automatically.
 
 ## Projects
 
-| Project           | Purpose                                                                        |
-| ----------------- | ------------------------------------------------------------------------------ |
-| `AlvorPong`       | Executable entry point and root boot state                                     |
-| `AlvorPong.App`   | App scope and Blend-based style (`AppStyle`)                                   |
-| `AlvorPong.Game`  | Match simulation: field, physics, controls, sprite renderer (no UI dependency) |
-| `AlvorPong.Menus` | Game states and AlvorKit.UI menus (main menu, pause, game over)                |
+| Project                    | Purpose                                                         |
+| -------------------------- | --------------------------------------------------------------- |
+| `AlvorPong`                | Executable entry point and root boot state                      |
+| `AlvorPong.App`            | Pure app scope                                                  |
+| `AlvorPong.App.Frontend`   | App-wide MiniAudio engine and sound ids                         |
+| `AlvorPong.Game`           | Pure match simulation: field, physics, controls, and scoring    |
+| `AlvorPong.Game.Frontend`  | Sprite-batch match renderer                                     |
+| `AlvorPong.Menus`          | Blend style, game states, and UI menus: main, pause, game over  |
 
 ## CI
 

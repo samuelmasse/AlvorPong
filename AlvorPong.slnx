@@ -1,6 +1,8 @@
 <Solution>
     <Project Path="src/AlvorPong/AlvorPong.csproj" DefaultStartup="true" />
     <Project Path="src/AlvorPong.App/AlvorPong.App.csproj" />
+    <Project Path="src/AlvorPong.App.Frontend/AlvorPong.App.Frontend.csproj" />
     <Project Path="src/AlvorPong.Game/AlvorPong.Game.csproj" />
+    <Project Path="src/AlvorPong.Game.Frontend/AlvorPong.Game.Frontend.csproj" />
     <Project Path="src/AlvorPong.Menus/AlvorPong.Menus.csproj" />
 </Solution>

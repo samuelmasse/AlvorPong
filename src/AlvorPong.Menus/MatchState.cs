@@ -17,6 +17,7 @@ public class MatchState(
     AppStyle s,
     MatchScope scope,
     MatchConfig config,
+    MatchInput matchInput,
     MatchControls controls,
     MatchField field,
     MatchScore score,
@@ -56,8 +57,12 @@ public class MatchState(
         UpdateCursor(delta);
 
         if (paused)
+        {
+            matchInput.Clear();
             return;
+        }
 
+        matchInput.Set(Axis(Keys.W, Keys.S), Axis(Keys.I, Keys.K) + Axis(Keys.Up, Keys.Down));
         var scorer = field.Step(delta, controls.LeftAxis(), controls.RightAxis(), out var events);
         PlayFieldEvents(events);
         UpdateServeCountdownSound();
@@ -179,4 +184,7 @@ public class MatchState(
 
     private AppSound MatchOverSound() =>
         config.RightIsAi && score.Winner == MatchSide.Right ? AppSound.MatchLoss : AppSound.MatchWin;
+
+    private float Axis(Keys up, Keys down) =>
+        (keyboard.IsKeyDown(down) ? 1f : 0f) - (keyboard.IsKeyDown(up) ? 1f : 0f);
 }

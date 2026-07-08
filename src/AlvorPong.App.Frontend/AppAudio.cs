@@ -1,4 +1,4 @@
-namespace AlvorPong.App;
+namespace AlvorPong.App.Frontend;
 
 /// <summary>Owns the app-wide MiniAudio engine and a fixed pool of preloaded one-shot sounds.</summary>
 [App]

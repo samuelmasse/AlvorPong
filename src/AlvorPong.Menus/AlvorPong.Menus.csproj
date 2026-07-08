@@ -2,9 +2,14 @@
 
     <ItemGroup>
         <ProjectReference Include="..\AlvorPong.App\AlvorPong.App.csproj" />
+        <ProjectReference Include="..\AlvorPong.App.Frontend\AlvorPong.App.Frontend.csproj" />
         <ProjectReference Include="..\AlvorPong.Game\AlvorPong.Game.csproj" />
+        <ProjectReference Include="..\AlvorPong.Game.Frontend\AlvorPong.Game.Frontend.csproj" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.ECS.Generator\AlvorKit.ECS.Generator.csproj"
             OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Engine.Loop\AlvorKit.Engine.Loop.csproj" />
+        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Graphics2D\AlvorKit.Graphics2D.csproj" />
+        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Injection\AlvorKit.Injection.csproj" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.UI\AlvorKit.UI.csproj" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.UI.Blend\AlvorKit.UI.Blend.csproj" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.UI.Generator\AlvorKit.UI.Generator.csproj"
@@ -13,11 +18,19 @@
 
     <ItemGroup>
         <Using Include="AlvorKit.ECS" />
+        <Using Include="AlvorKit.Engine" />
+        <Using Include="AlvorKit.Engine.Loop" />
+        <Using Include="AlvorKit.Graphics2D" />
+        <Using Include="AlvorKit.Injection" />
+        <Using Include="AlvorKit.Maths" />
         <Using Include="AlvorKit.UI" />
         <Using Include="AlvorKit.UI.Blend" />
         <Using Include="AlvorKit.UI.UiSyntax" Static="true" />
         <Using Include="AlvorPong.App" />
+        <Using Include="AlvorPong.App.Frontend" />
         <Using Include="AlvorPong.Game" />
+        <Using Include="AlvorPong.Game.Frontend" />
+        <Using Include="AlvorKit.Windowing" />
     </ItemGroup>
 
 </Project>

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <ProjectReference Include="..\AlvorPong.Game\AlvorPong.Game.csproj" />
+        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Engine\AlvorKit.Engine.csproj" />
+        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Graphics2D\AlvorKit.Graphics2D.csproj" />
+        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Graphics2D.Fonts\AlvorKit.Graphics2D.Fonts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="AlvorKit.Engine" />
+        <Using Include="AlvorKit.Graphics2D" />
+        <Using Include="AlvorKit.Graphics2D.Fonts" />
+        <Using Include="AlvorKit.Maths" />
+        <Using Include="AlvorPong.Game" />
+    </ItemGroup>
+
+</Project>

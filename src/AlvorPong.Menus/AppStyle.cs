@@ -1,4 +1,4 @@
-namespace AlvorPong.App;
+namespace AlvorPong.Menus;
 
 /// <summary>Application style: the Blend design system plus AlvorPong's game-local recipes and colors.</summary>
 [App]
