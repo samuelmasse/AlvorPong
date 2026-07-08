@@ -32,8 +32,10 @@ derived from `AlvorPong.slnx` and the sibling `../AlvorKit/AlvorKit.slnx`.
 
 A fresh AlvorKit clone works without any codegen step — its pinned generated binding packages
 restore from nuget.org, and native DLLs flow into AlvorPong's output through the NuGet runtimes
-targets. If AlvorKit's `out/bindgen` or `out/mathgen` exist, those local projects are used instead
-automatically.
+targets. If AlvorKit's active generated roots `out/bindgen` or `out/mathgen` exist, those local
+projects are used instead automatically. Default generator runs write under `out/generated` and do
+not activate those local projects; pass `--setup-local` to the generators when local projects are
+intentional.
 
 ## Game
 
@@ -47,14 +49,14 @@ automatically.
 
 ## Projects
 
-| Project                    | Purpose                                                         |
-| -------------------------- | --------------------------------------------------------------- |
-| `AlvorPong`                | Executable entry point and root boot state                      |
-| `AlvorPong.App`            | Pure app scope                                                  |
-| `AlvorPong.App.Frontend`   | App-wide MiniAudio engine and sound ids                         |
-| `AlvorPong.Game`           | Pure match simulation: field, physics, controls, and scoring    |
-| `AlvorPong.Game.Frontend`  | Sprite-batch match renderer                                     |
-| `AlvorPong.Menus`          | Blend style, game states, and UI menus: main, pause, game over  |
+| Project                   | Purpose                                                        |
+| ------------------------- | -------------------------------------------------------------- |
+| `AlvorPong`               | Executable entry point and root boot state                     |
+| `AlvorPong.App`           | Pure app scope                                                 |
+| `AlvorPong.App.Frontend`  | App-wide MiniAudio engine and sound ids                        |
+| `AlvorPong.Game`          | Pure match simulation: field, physics, controls, and scoring   |
+| `AlvorPong.Game.Frontend` | Sprite-batch match renderer                                    |
+| `AlvorPong.Menus`         | Blend style, game states, and UI menus: main, pause, game over |
 
 ## CI
 
