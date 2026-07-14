@@ -4,17 +4,20 @@ namespace AlvorPong.Game;
 [Match]
 public class MatchInput
 {
+    private float leftAxis;
+    private float rightAxis;
+
     /// <summary>Gets left paddle movement intent, normally -1, 0, or 1.</summary>
-    public float LeftAxis { get; private set; }
+    public float LeftAxis => leftAxis;
 
     /// <summary>Gets right paddle movement intent, normally -1, 0, or 1.</summary>
-    public float RightAxis { get; private set; }
+    public float RightAxis => rightAxis;
 
     /// <summary>Updates the current frame input snapshot.</summary>
     public void Set(float leftAxis, float rightAxis)
     {
-        LeftAxis = leftAxis;
-        RightAxis = rightAxis;
+        this.leftAxis = leftAxis;
+        this.rightAxis = rightAxis;
     }
 
     /// <summary>Clears input while menus or overlays own the frame.</summary>

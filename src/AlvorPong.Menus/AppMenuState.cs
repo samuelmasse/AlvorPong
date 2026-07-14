@@ -31,8 +31,7 @@ public class AppMenuState(
 
     public override void Unload()
     {
-        if (menuNode != default)
-            NodesRemove(ui, menuNode);
+        NodesRemove(ui, menuNode);
         scripts.Remove(uiScript);
     }
 

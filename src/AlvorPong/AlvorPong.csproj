@@ -6,7 +6,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\AlvorPong.App\AlvorPong.App.csproj" />
-        <ProjectReference Include="..\AlvorPong.App.Frontend\AlvorPong.App.Frontend.csproj" />
         <ProjectReference Include="..\AlvorPong.Menus\AlvorPong.Menus.csproj" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Engine.Loop\AlvorKit.Engine.Loop.csproj" />
     </ItemGroup>
@@ -20,7 +19,6 @@
 
     <ItemGroup>
         <Using Include="AlvorPong.App" />
-        <Using Include="AlvorPong.App.Frontend" />
         <Using Include="AlvorPong.Menus" />
         <Using Include="AlvorKit.Engine" />
         <Using Include="AlvorKit.Engine.Loop" />

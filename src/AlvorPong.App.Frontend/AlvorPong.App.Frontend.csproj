@@ -6,19 +6,31 @@
 
     <ItemGroup>
         <ProjectReference Include="..\AlvorPong.App\AlvorPong.App.csproj" />
+        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Engine\AlvorKit.Engine.csproj" />
+        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.OpenGL.Layer\AlvorKit.OpenGL.Layer.csproj" />
     </ItemGroup>
 
     <ItemGroup Condition="!Exists('$(BindingsRoot)\AlvorKit.MiniAudio.Backend\AlvorKit.MiniAudio.Backend.csproj')">
         <PackageReference Include="AlvorKit.MiniAudio.Backend" Version="$(MaBindVer)" />
     </ItemGroup>
 
+    <ItemGroup Condition="!Exists('$(BindingsRoot)\AlvorKit.OpenGL\AlvorKit.OpenGL.csproj')">
+        <PackageReference Include="AlvorKit.OpenGL" Version="$(GlBindVer)" />
+    </ItemGroup>
+
     <ItemGroup Condition="Exists('$(BindingsRoot)\AlvorKit.MiniAudio.Backend\AlvorKit.MiniAudio.Backend.csproj')">
         <ProjectReference Include="$(BindingsRoot)\AlvorKit.MiniAudio.Backend\AlvorKit.MiniAudio.Backend.csproj" />
     </ItemGroup>
 
+    <ItemGroup Condition="Exists('$(BindingsRoot)\AlvorKit.OpenGL\AlvorKit.OpenGL.csproj')">
+        <ProjectReference Include="$(BindingsRoot)\AlvorKit.OpenGL\AlvorKit.OpenGL.csproj" />
+    </ItemGroup>
+
     <ItemGroup>
         <Using Include="AlvorPong.App" />
+        <Using Include="AlvorKit.Engine" />
         <Using Include="AlvorKit.MiniAudio" />
+        <Using Include="AlvorKit.OpenGL.Layer" />
         <Using Include="System.Runtime.InteropServices" />
     </ItemGroup>
 

@@ -8,7 +8,7 @@ namespace AlvorPong.Game;
 /// rubber-bands on the score — sloppier and slower with a lead, sharp again when trailing.
 /// </summary>
 [Match]
-public class MatchAi(MatchField field, MatchScore score)
+public class MatchAi(MatchRandom random, MatchField field, MatchScore score)
 {
     private const float ReactionX = MatchField.Width * 0.54f;
     private const float SpeedFactor = 0.84f;
@@ -24,7 +24,7 @@ public class MatchAi(MatchField field, MatchScore score)
     private const float SliceWindow = 0.12f;
     private const float OffsetTolerance = 0.15f;
     private const double SliceChance = 0.65;
-    private static readonly float[] OffsetCandidates = [-0.85f, -0.6f, -0.35f, 0f, 0.35f, 0.6f, 0.85f];
+    private const int OffsetCandidateCount = 7;
 
     private bool planned;
     private float plannedVySign;
@@ -75,8 +75,19 @@ public class MatchAi(MatchField field, MatchScore score)
 
         float bestOffset = 0f;
         float bestDistance = -1f;
-        foreach (float candidate in OffsetCandidates)
+        for (var candidateIndex = 0; candidateIndex < OffsetCandidateCount; candidateIndex++)
         {
+            var candidate = candidateIndex switch
+            {
+                0 => -0.85f,
+                1 => -0.6f,
+                2 => -0.35f,
+                3 => 0f,
+                4 => 0.35f,
+                5 => 0.6f,
+                _ => 0.85f,
+            };
+
             if (MathF.Abs(candidate) > 1f - PressureCaution * pressure)
                 continue;
 
@@ -98,7 +109,7 @@ public class MatchAi(MatchField field, MatchScore score)
         paddleTarget = ClampPaddle(interceptY - bestOffset * MatchField.PaddleReach + AimError(pressure));
 
         float direction = MathF.Sign(bestOffset);
-        if (direction == 0f || Random.Shared.NextDouble() >= SliceChance)
+        if (direction == 0f || random.NextDouble() >= SliceChance)
             return;
 
         float lead = paddleTarget - direction * RunSpeed() * SliceWindow;
@@ -113,7 +124,7 @@ public class MatchAi(MatchField field, MatchScore score)
     {
         float angle = MatchField.ShotAngle(offset, 0f);
         float speed = MatchField.ShotSpeed(ballSpeed, 0f);
-        var velocity = new Vec2(-speed * MathF.Cos(angle), speed * MathF.Sin(angle));
+        Vec2 velocity = (-speed * MathF.Cos(angle), speed * MathF.Sin(angle));
         return MatchField.PredictBallY((MatchField.RightContactX, interceptY), velocity, MatchField.LeftContactX);
     }
 
@@ -128,7 +139,7 @@ public class MatchAi(MatchField field, MatchScore score)
             + LeadSloppiness * Math.Max(0f, Handicap)
             - TrailFocus * Math.Max(0f, -Handicap)
             + AimErrorMax * pressure * pressure;
-        float gaussian = (Random.Shared.NextSingle() + Random.Shared.NextSingle() + Random.Shared.NextSingle() - 1.5f) * 2f;
+        float gaussian = random.NextSignedSingle() + random.NextSignedSingle() + random.NextSignedSingle();
         return gaussian * sigma;
     }
 

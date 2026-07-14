@@ -2,18 +2,22 @@ namespace AlvorPong.Menus;
 
 /// <summary>Application style: the Blend design system plus AlvorPong's game-local recipes and colors.</summary>
 [App]
-public class AppStyle(RootInter inter, RootGl gl, RootUiScale scale, RootKeyboard keyboard)
+public class AppStyle(RootInter inter, RootUiScale scale, RootKeyboard keyboard, AppGl gl)
     : BlendStyle(inter, gl, scale, keyboard)
 {
     private const float KeyChipHeight = 16f;
     private const float KeyChipTextPadding = 5f;
     private const int KeyChipFontSize = 10;
 
+    private readonly Vec4 fieldFaint = (0.92f, 0.94f, 0.96f, 0.25f);
+
     /// <summary>Gets the field foreground at the decorative banner alpha.</summary>
-    public Vec4 FieldFaint { get; } = (0.92f, 0.94f, 0.96f, 0.25f);
+    public Vec4 FieldFaint => fieldFaint;
+
+    private readonly Vec4 tapeLeftPoint = (0.92f, 0.94f, 0.96f, 0.9f);
 
     /// <summary>Gets the point-tape color for points won by the left player.</summary>
-    public Vec4 TapeLeftPoint { get; } = (0.92f, 0.94f, 0.96f, 0.9f);
+    public Vec4 TapeLeftPoint => tapeLeftPoint;
 
     /// <summary>Gets the point-tape color for points won by the right player.</summary>
     public Vec4 TapeRightPoint => Palette.WithAlpha(Palette.MutedText, 0.4f);

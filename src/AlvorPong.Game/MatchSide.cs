@@ -4,5 +4,5 @@ namespace AlvorPong.Game;
 public enum MatchSide
 {
     Left,
-    Right
+    Right,
 }

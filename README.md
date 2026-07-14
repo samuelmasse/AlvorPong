@@ -53,7 +53,7 @@ intentional.
 | ------------------------- | -------------------------------------------------------------- |
 | `AlvorPong`               | Executable entry point and root boot state                     |
 | `AlvorPong.App`           | Pure app scope                                                 |
-| `AlvorPong.App.Frontend`  | App-wide MiniAudio engine and sound ids                        |
+| `AlvorPong.App.Frontend`  | App-owned GL layer, MiniAudio engine, and sound ids            |
 | `AlvorPong.Game`          | Pure match simulation: field, physics, controls, and scoring   |
 | `AlvorPong.Game.Frontend` | Sprite-batch match renderer                                    |
 | `AlvorPong.Menus`         | Blend style, game states, and UI menus: main, pause, game over |
@@ -80,7 +80,8 @@ rematch, and return to menu all work when AlvorKit is consumed purely through si
 ProjectReferences.
 
 - Blend's Inter fonts are embedded in `AlvorKit.UI.Blend` (`RootInter`, mirroring `RootRoboto`), so
-  this repo ships no font assets at all — `AppStyle` is a one-line `BlendStyle` subclass.
+  this repo ships no font assets. `AppStyle` extends `BlendStyle` with the game's colors and recipes,
+  and its generated control chrome is owned by the app-scoped `AppGl` node.
 - `ProjectRoot.ResDirectory` (AlvorKit.Script.Workspace) hardcodes `AlvorKit.slnx` as its root
   marker, so external repos cannot use it for their own `res/`; a consumer with real assets should
   copy them to the output directory and load via `AppContext.BaseDirectory`.

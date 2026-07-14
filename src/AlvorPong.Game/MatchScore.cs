@@ -5,26 +5,33 @@ namespace AlvorPong.Game;
 public class MatchScore
 {
     public const int WinScore = 5;
+    private const int MaximumPointCount = WinScore * 2 - 1;
 
-    private readonly List<MatchSide> history = [];
+    private readonly MatchSide[] history = new MatchSide[MaximumPointCount];
+    private int pointCount;
+    private int left;
+    private int right;
 
-    public int Left { get; private set; }
-    public int Right { get; private set; }
+    /// <summary>Gets the left player's score.</summary>
+    public int Left => left;
+
+    /// <summary>Gets the right player's score.</summary>
+    public int Right => right;
 
     /// <summary>Gets the scoring side of every point in match order.</summary>
-    public IReadOnlyList<MatchSide> History => history;
+    public ReadOnlySpan<MatchSide> History => history.AsSpan(0, pointCount);
 
     public MatchSide? Winner =>
-        Left >= WinScore ? MatchSide.Left
-        : Right >= WinScore ? MatchSide.Right
+        left >= WinScore ? MatchSide.Left
+        : right >= WinScore ? MatchSide.Right
         : null;
 
     public void Add(MatchSide side)
     {
-        history.Add(side);
+        history[pointCount++] = side;
         if (side == MatchSide.Left)
-            Left++;
+            left++;
         else
-            Right++;
+            right++;
     }
 }

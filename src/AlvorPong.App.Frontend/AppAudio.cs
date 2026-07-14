@@ -15,9 +15,6 @@ public sealed unsafe class AppAudio(Ma ma) : IDisposable
 
     public void Load()
     {
-        if (enabled || disposed)
-            return;
-
         engine = AllocateNativeObject<MaEngine>();
         if (ma.EngineInit(null, engine) != MaResult.Success)
         {
@@ -32,13 +29,10 @@ public sealed unsafe class AppAudio(Ma ma) : IDisposable
 
     public void Play(AppSound sound)
     {
-        if (!enabled || disposed)
+        if (!enabled)
             return;
 
         var soundIndex = (int)sound;
-        if ((uint)soundIndex >= SoundCount)
-            return;
-
         var next = nextVoices[soundIndex];
         nextVoices[soundIndex] = (next + 1) % VoicesPerSound;
 
@@ -111,7 +105,7 @@ public sealed unsafe class AppAudio(Ma ma) : IDisposable
         sound = null;
     }
 
-    private static float Volume(AppSound sound) => sound switch
+    private float Volume(AppSound sound) => sound switch
     {
         AppSound.MenuMove => 0.35f,
         AppSound.CountdownTick => 0.45f,
@@ -124,7 +118,7 @@ public sealed unsafe class AppAudio(Ma ma) : IDisposable
         _ => 0.6f,
     };
 
-    private static T* AllocateNativeObject<T>()
+    private T* AllocateNativeObject<T>()
         where T : unmanaged =>
         (T*)NativeMemory.AllocZeroed((nuint)sizeof(T));
 }

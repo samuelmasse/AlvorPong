@@ -4,7 +4,12 @@ namespace AlvorPong.Game.Frontend;
 [Match]
 public class MatchFonts(Font font)
 {
-    public FontSize Score { get; } = font.Size(54);
+    private readonly FontSize score = font.Size(54);
+    private readonly FontSize countdown = font.Size(140);
 
-    public FontSize Countdown { get; } = font.Size(140);
+    /// <summary>Gets the font used for the running score.</summary>
+    public FontSize Score => score;
+
+    /// <summary>Gets the font used for the serve countdown.</summary>
+    public FontSize Countdown => countdown;
 }
