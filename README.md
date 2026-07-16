@@ -65,7 +65,8 @@ as local development), restores and builds the solution, then runs AlvorKit's li
 (`AlvorKit.Script.Lint`) against this repository: dotnet format (whitespace and style per the
 shared `.editorconfig`), Prettier for Markdown/YAML/JSON, editorconfig-checker, and actionlint for
 the workflow files. Because AlvorKit is a private repository, the workflow needs an
-`ALVORKIT_TOKEN` repository secret holding a token with read access to `samuelmasse/AlvorKit`.
+`ALVORKIT_DEPLOY_KEY` repository secret containing an SSH deploy key with read access to
+`samuelmasse/AlvorKit`.
 
 Run the same lint locally from the repo root:
 

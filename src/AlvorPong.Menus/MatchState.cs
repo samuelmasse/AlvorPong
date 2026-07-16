@@ -15,8 +15,8 @@ public class MatchState(
     MatchScope scope,
     MatchConfig config,
     MatchInput input,
-    MatchControls controls,
-    MatchField field,
+    MatchSimulation simulation,
+    MatchEntLifetime ents,
     MatchScore score,
     MatchRenderer renderer,
     MatchAudio audio,
@@ -24,6 +24,7 @@ public class MatchState(
 {
     private EntMut pauseNode;
     private bool paused;
+    private bool continuingToMatchOver;
 
     public override void Load()
     {
@@ -35,6 +36,8 @@ public class MatchState(
     {
         HidePauseMenu(playSound: false);
         cursor.Show();
+        if (!continuingToMatchOver)
+            ents.Unload();
     }
 
     public override void Update(double delta)
@@ -56,7 +59,7 @@ public class MatchState(
         }
 
         input.Set(Axis(Keys.W, Keys.S), Axis(Keys.I, Keys.K) + Axis(Keys.Up, Keys.Down));
-        var scorer = field.Step(delta, controls.LeftAxis(), controls.RightAxis(), out var events);
+        var scorer = simulation.Step(delta, out var events);
         audio.Update(events);
 
         if (scorer is not { } side)
@@ -67,11 +70,12 @@ public class MatchState(
         if (score.Winner != null)
         {
             audio.MatchOver();
+            continuingToMatchOver = true;
             state.Current = scope.New<MatchOverState>();
             return;
         }
 
-        field.Reset(towards: side == MatchSide.Left ? MatchSide.Right : MatchSide.Left);
+        simulation.Reset(towards: side == MatchSide.Left ? MatchSide.Right : MatchSide.Left);
         audio.StartServe();
     }
 

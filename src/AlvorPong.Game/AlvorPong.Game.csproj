@@ -1,11 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
+        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.ECS\AlvorKit.ECS.csproj" />
+        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.ECS.Indexed\AlvorKit.ECS.Indexed.csproj" />
+        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.ECS.Generator\AlvorKit.ECS.Generator.csproj"
+            OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Injection\AlvorKit.Injection.csproj" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Maths\AlvorKit.Maths.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+        <Using Include="AlvorKit.ECS" />
+        <Using Include="AlvorKit.ECS.Generator" />
+        <Using Include="AlvorKit.ECS.Indexed" />
         <Using Include="AlvorKit.Injection" />
         <Using Include="AlvorKit.Maths" />
     </ItemGroup>

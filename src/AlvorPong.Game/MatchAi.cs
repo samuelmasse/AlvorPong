@@ -8,7 +8,12 @@ namespace AlvorPong.Game;
 /// rubber-bands on the score — sloppier and slower with a lead, sharp again when trailing.
 /// </summary>
 [Match]
-public class MatchAi(MatchRandom random, MatchField field, MatchScore score)
+public class MatchAi(
+    MatchRandom random,
+    MatchField field,
+    MatchScore score,
+    MatchPaddleBag paddles,
+    MatchBallBag balls)
 {
     private const float ReactionX = MatchField.Width * 0.54f;
     private const float SpeedFactor = 0.84f;
@@ -31,46 +36,52 @@ public class MatchAi(MatchRandom random, MatchField field, MatchScore score)
     private float paddleTarget;
     private float sliceDirection;
 
+    /// <summary>Computes the right paddle's movement intent for the current simulation step.</summary>
     public float Axis()
     {
-        if (field.BallVelocity.X <= 0f || field.BallPosition.X < ReactionX)
+        var ball = balls.Ents[0];
+        var ballPosition = ball.Position;
+        var ballVelocity = ball.Velocity;
+        PaddleYs(out var leftPaddleY, out var rightPaddleY);
+
+        if (ballVelocity.X <= 0f || ballPosition.X < ReactionX)
         {
             planned = false;
-            return Approach(MatchField.Height / 2f);
+            return Approach(MatchField.Height / 2f, rightPaddleY);
         }
 
-        float timeLeft = (MatchField.RightContactX - field.BallPosition.X) / field.BallVelocity.X;
+        float timeLeft = (field.RightContactX - ballPosition.X) / ballVelocity.X;
         if (timeLeft <= 0f)
-            return Approach(field.BallPosition.Y);
+            return Approach(ballPosition.Y, rightPaddleY);
 
-        if (planned && MathF.Sign(field.BallVelocity.Y) != plannedVySign)
+        if (planned && MathF.Sign(ballVelocity.Y) != plannedVySign)
             planned = false;
 
         if (!planned)
-            Plan(timeLeft);
+            Plan(ballPosition, ballVelocity, leftPaddleY, rightPaddleY, timeLeft);
 
         if (sliceDirection == 0f)
-            return Approach(paddleTarget);
+            return Approach(paddleTarget, rightPaddleY);
 
         if (timeLeft < SliceWindow)
             return sliceDirection * RunSpeed() / MatchField.PaddleSpeed;
 
-        return Approach(paddleTarget - sliceDirection * RunSpeed() * SliceWindow);
+        return Approach(paddleTarget - sliceDirection * RunSpeed() * SliceWindow, rightPaddleY);
     }
 
     /// <summary>
     /// Picks the contact: where to intercept, which corner to punish, and whether to slice. The read is a
     /// straight-line projection clamped to the field — a bank shot re-plans at its bounce, often too late.
     /// </summary>
-    private void Plan(float timeLeft)
+    private void Plan(Vec2 ballPosition, Vec2 ballVelocity, float leftPaddleY, float rightPaddleY, float timeLeft)
     {
         planned = true;
-        plannedVySign = MathF.Sign(field.BallVelocity.Y);
+        plannedVySign = MathF.Sign(ballVelocity.Y);
         sliceDirection = 0f;
 
-        float straightY = field.BallPosition.Y + field.BallVelocity.Y * timeLeft;
+        float straightY = ballPosition.Y + ballVelocity.Y * timeLeft;
         float interceptY = Math.Clamp(straightY, MatchField.BallSize / 2f, MatchField.Height - MatchField.BallSize / 2f);
-        float ballSpeed = field.BallVelocity.Length;
+        float ballSpeed = ballVelocity.Length;
         float pressure = ballSpeed / MatchField.MaxSpeed;
 
         float bestOffset = 0f;
@@ -95,10 +106,10 @@ public class MatchAi(MatchRandom random, MatchField field, MatchScore score)
             float achieved = (interceptY - target) / MatchField.PaddleReach;
             if (MathF.Abs(achieved - candidate) > OffsetTolerance)
                 continue;
-            if (MathF.Abs(target - field.RightPaddleY) > RunSpeed() * timeLeft)
+            if (MathF.Abs(target - rightPaddleY) > RunSpeed() * timeLeft)
                 continue;
 
-            float distance = MathF.Abs(Landing(interceptY, ballSpeed, achieved) - field.LeftPaddleY);
+            float distance = MathF.Abs(Landing(interceptY, ballSpeed, achieved) - leftPaddleY);
             if (distance > bestDistance)
             {
                 bestDistance = distance;
@@ -114,18 +125,18 @@ public class MatchAi(MatchRandom random, MatchField field, MatchScore score)
 
         float lead = paddleTarget - direction * RunSpeed() * SliceWindow;
         bool leadReachable = ClampPaddle(lead) == lead
-            && MathF.Abs(lead - field.RightPaddleY) <= RunSpeed() * (timeLeft - SliceWindow);
+            && MathF.Abs(lead - rightPaddleY) <= RunSpeed() * (timeLeft - SliceWindow);
         if (leadReachable)
             sliceDirection = direction;
     }
 
     /// <summary>Predicts where a placed return at the given contact offset lands on the player's paddle plane.</summary>
-    private static float Landing(float interceptY, float ballSpeed, float offset)
+    private float Landing(float interceptY, float ballSpeed, float offset)
     {
-        float angle = MatchField.ShotAngle(offset, 0f);
-        float speed = MatchField.ShotSpeed(ballSpeed, 0f);
+        float angle = field.ShotAngle(offset, 0f);
+        float speed = field.ShotSpeed(ballSpeed, 0f);
         Vec2 velocity = (-speed * MathF.Cos(angle), speed * MathF.Sin(angle));
-        return MatchField.PredictBallY((MatchField.RightContactX, interceptY), velocity, MatchField.LeftContactX);
+        return field.PredictBallY((field.RightContactX, interceptY), velocity, field.LeftContactX);
     }
 
     /// <summary>Gets the score rubber-band: 1 when the AI leads by the full match, -1 when it trails by it.</summary>
@@ -143,9 +154,9 @@ public class MatchAi(MatchRandom random, MatchField field, MatchScore score)
         return gaussian * sigma;
     }
 
-    private float Approach(float targetY)
+    private float Approach(float targetY, float paddleY)
     {
-        float error = targetY - field.RightPaddleY;
+        float error = targetY - paddleY;
         if (MathF.Abs(error) < Deadzone)
             return 0f;
         float axisLimit = RunSpeed() / MatchField.PaddleSpeed;
@@ -156,6 +167,23 @@ public class MatchAi(MatchRandom random, MatchField field, MatchScore score)
         MatchField.PaddleSpeed * (SpeedFactor
             - LeadSpeedDrop * Math.Max(0f, Handicap)
             + TrailSpeedGain * Math.Max(0f, -Handicap));
+
+    private void PaddleYs(out float left, out float right)
+    {
+        var ents = paddles.Ents;
+        var first = ents[0];
+        var second = ents[1];
+        if (first.Side == MatchSide.Left)
+        {
+            left = first.Position.Y;
+            right = second.Position.Y;
+        }
+        else
+        {
+            left = second.Position.Y;
+            right = first.Position.Y;
+        }
+    }
 
     private static float ClampPaddle(float y) =>
         Math.Clamp(y, MatchField.PaddleHeight / 2f, MatchField.Height - MatchField.PaddleHeight / 2f);

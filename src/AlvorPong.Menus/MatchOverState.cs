@@ -15,7 +15,8 @@ public class MatchOverState(
     AppStyle s,
     MatchConfig config,
     MatchRenderer renderer,
-    MatchScore score) : State
+    MatchScore score,
+    MatchEntLifetime ents) : State
 {
     private EntMut menuNode;
 
@@ -33,6 +34,7 @@ public class MatchOverState(
     {
         NodesRemove(ui, menuNode);
         scripts.Remove(uiScript);
+        ents.Unload();
     }
 
     public override void Update(double delta)

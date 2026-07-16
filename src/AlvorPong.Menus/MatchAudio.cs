@@ -2,17 +2,17 @@ namespace AlvorPong.Menus;
 
 /// <summary>Translates match simulation and state events into app audio playback.</summary>
 [Match]
-public class MatchAudio(AppAudio audio, MatchConfig config, MatchField field, MatchScore score)
+public class MatchAudio(AppAudio audio, MatchConfig config, MatchScore score, MatchServe serve)
 {
     private int serveSecondsLeft;
 
     /// <summary>Starts the audible countdown for the current serve.</summary>
     public void StartServe()
     {
-        if (!field.IsServing)
+        if (!serve.IsServing)
             return;
 
-        serveSecondsLeft = field.ServeSecondsLeft;
+        serveSecondsLeft = serve.SecondsLeft;
         audio.Play(AppSound.CountdownTick);
     }
 
@@ -28,10 +28,10 @@ public class MatchAudio(AppAudio audio, MatchConfig config, MatchField field, Ma
         else if ((events & MatchFieldEvents.PaddleHit) != 0)
             audio.Play(AppSound.PaddleHit);
 
-        if (!field.IsServing)
+        if (!serve.IsServing)
             return;
 
-        var next = field.ServeSecondsLeft;
+        var next = serve.SecondsLeft;
         if (next == serveSecondsLeft)
             return;
 
