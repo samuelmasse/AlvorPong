@@ -1,4 +1,4 @@
-namespace AlvorPong.Menus;
+namespace AlvorPong;
 
 /// <summary>Creates a fresh match scope from the app scope and enters the match state.</summary>
 [App]

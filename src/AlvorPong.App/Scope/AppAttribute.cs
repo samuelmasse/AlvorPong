@@ -1,4 +1,4 @@
-namespace AlvorPong.App;
+namespace AlvorPong;
 
 /// <summary>Marks services that belong to the AlvorPong application lifetime.</summary>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false)]

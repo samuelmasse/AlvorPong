@@ -1,4 +1,4 @@
-namespace AlvorPong.Menus;
+namespace AlvorPong;
 
 /// <summary>Shows the main menu and starts matches from it.</summary>
 [App]

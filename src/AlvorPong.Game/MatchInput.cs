@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Frame input sampled by the menu/composition layer and consumed by pure match logic.</summary>
 [Match]

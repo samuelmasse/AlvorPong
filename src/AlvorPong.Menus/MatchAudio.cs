@@ -1,4 +1,4 @@
-namespace AlvorPong.Menus;
+namespace AlvorPong;
 
 /// <summary>Translates match simulation and state events into app audio playback.</summary>
 [Match]

@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Owns nondeterministic choices for one match.</summary>
 [Match]

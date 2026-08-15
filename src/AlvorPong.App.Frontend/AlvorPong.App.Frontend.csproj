@@ -27,10 +27,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="AlvorPong.App" />
-        <Using Include="AlvorKit.Engine" />
-        <Using Include="AlvorKit.MiniAudio" />
-        <Using Include="AlvorKit.OpenGL.Layer" />
         <Using Include="System.Runtime.InteropServices" />
     </ItemGroup>
 

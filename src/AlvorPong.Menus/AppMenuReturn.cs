@@ -1,4 +1,4 @@
-namespace AlvorPong.Menus;
+namespace AlvorPong;
 
 /// <summary>Leaves the current state and returns to the main menu.</summary>
 [App]

@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Tracks match points and decides the winner.</summary>
 [Match]

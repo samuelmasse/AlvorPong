@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Registers maintained Ent bags and publishes the initialized match Ents.</summary>
 [MatchLoader]

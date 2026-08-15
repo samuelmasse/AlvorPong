@@ -1,4 +1,4 @@
-namespace AlvorPong.Menus;
+namespace AlvorPong;
 
 /// <summary>Runs one Pong match: input, simulation steps, scoring, pause, and state transitions.</summary>
 [Match]

@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Declares mutable state shared by the simulated Ents in one Pong match.</summary>
 [Components]

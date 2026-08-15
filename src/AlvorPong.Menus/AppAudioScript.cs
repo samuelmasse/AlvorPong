@@ -1,4 +1,4 @@
-namespace AlvorPong.Menus;
+namespace AlvorPong;
 
 /// <summary>Loads app audio at startup and releases MiniAudio state during root shutdown.</summary>
 [App]

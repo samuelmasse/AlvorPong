@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Dependency injection scope for ordered match setup.</summary>
 [MatchLoader]

@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Allocates and fully initializes the simulated Ents in one match.</summary>
 [Match]

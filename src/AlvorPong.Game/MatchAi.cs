@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>
 /// Steers the right paddle: aims each return at the corner farthest from the player and slices through

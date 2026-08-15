@@ -1,4 +1,4 @@
-namespace AlvorPong.Menus;
+namespace AlvorPong;
 
 /// <summary>Builds the game-over card: winner, scoreboard, point tape, and rematch-first actions.</summary>
 [App]

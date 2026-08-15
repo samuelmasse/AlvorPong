@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Owns all ECS allocations made for one match.</summary>
 [Match]

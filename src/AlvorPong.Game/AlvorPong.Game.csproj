@@ -9,12 +9,4 @@
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Maths\AlvorKit.Maths.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Using Include="AlvorKit.ECS" />
-        <Using Include="AlvorKit.ECS.Generator" />
-        <Using Include="AlvorKit.ECS.Indexed" />
-        <Using Include="AlvorKit.Injection" />
-        <Using Include="AlvorKit.Maths" />
-    </ItemGroup>
-
 </Project>

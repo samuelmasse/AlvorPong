@@ -1,4 +1,4 @@
-namespace AlvorPong.Menus;
+namespace AlvorPong;
 
 /// <summary>Builds full-width Blend menu buttons with an optional display-only key chip.</summary>
 [App]

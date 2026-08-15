@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Seeds a match scope with the selected match rules.</summary>
 [Match]

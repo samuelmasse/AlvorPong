@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Runs the focused match systems in simulation order.</summary>
 [Match]

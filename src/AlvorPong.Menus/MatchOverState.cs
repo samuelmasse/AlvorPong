@@ -1,4 +1,4 @@
-namespace AlvorPong.Menus;
+namespace AlvorPong;
 
 /// <summary>Shows the match result over the frozen final frame and offers a rematch or the way back to the main menu.</summary>
 [Match]

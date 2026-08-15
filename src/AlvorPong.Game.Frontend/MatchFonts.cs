@@ -1,4 +1,4 @@
-namespace AlvorPong.Game.Frontend;
+namespace AlvorPong;
 
 /// <summary>Fonts used by the match renderer, seeded by the menu/composition layer.</summary>
 [Match]

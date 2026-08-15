@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Simulation events emitted by a match step for presentation systems such as audio.</summary>
 [Flags]

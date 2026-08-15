@@ -1,4 +1,4 @@
-namespace AlvorPong.Menus;
+namespace AlvorPong;
 
 /// <summary>Applies the match cursor auto-hide policy without owning match state transitions.</summary>
 [Match]

@@ -1,4 +1,4 @@
-namespace AlvorPong.Menus;
+namespace AlvorPong;
 
 /// <summary>Builds the title screen: a splash card with match actions and a controls card over a status bar.</summary>
 [App]

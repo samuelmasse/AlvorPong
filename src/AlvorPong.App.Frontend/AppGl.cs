@@ -1,4 +1,4 @@
-namespace AlvorPong.App.Frontend;
+namespace AlvorPong;
 
 /// <summary>Owns OpenGL objects that live for the AlvorPong application lifetime.</summary>
 [App]

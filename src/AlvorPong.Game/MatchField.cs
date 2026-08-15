@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Defines the logical Pong field and its pure shot geometry.</summary>
 [Match]

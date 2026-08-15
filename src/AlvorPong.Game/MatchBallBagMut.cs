@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Mutable registration surface for the ready-ball bag.</summary>
 [Match]

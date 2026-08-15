@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Writes sampled player or AI movement intent into paddle components.</summary>
 [Match]

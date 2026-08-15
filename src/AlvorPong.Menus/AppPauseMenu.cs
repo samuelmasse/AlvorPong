@@ -1,4 +1,4 @@
-namespace AlvorPong.Menus;
+namespace AlvorPong;
 
 /// <summary>Builds the pause modal: score readout, resume-first actions, and the resume hints.</summary>
 [App]

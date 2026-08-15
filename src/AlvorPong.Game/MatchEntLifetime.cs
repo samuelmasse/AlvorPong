@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Retains match Ent ownership and performs maintained individual teardown before arena teardown.</summary>
 [Match]

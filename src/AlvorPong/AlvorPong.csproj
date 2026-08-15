@@ -17,12 +17,4 @@
         </Content>
     </ItemGroup>
 
-    <ItemGroup>
-        <Using Include="AlvorPong.App" />
-        <Using Include="AlvorPong.Menus" />
-        <Using Include="AlvorKit.Engine" />
-        <Using Include="AlvorKit.Engine.Loop" />
-        <Using Include="AlvorKit.Injection" />
-    </ItemGroup>
-
 </Project>

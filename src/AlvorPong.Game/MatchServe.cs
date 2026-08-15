@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Tracks the match-wide countdown and direction for the current serve.</summary>
 [Match]

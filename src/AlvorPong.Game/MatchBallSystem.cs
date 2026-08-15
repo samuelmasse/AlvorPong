@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Advances the ball, resolves swept paddle and wall collisions, and reports goals.</summary>
 [Match]

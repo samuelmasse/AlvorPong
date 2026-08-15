@@ -1,4 +1,4 @@
-namespace AlvorPong.Game.Frontend;
+namespace AlvorPong;
 
 /// <summary>Draws ECS match Ents with sprite quads and text, letterboxed into the current canvas.</summary>
 [Match]

@@ -1,4 +1,4 @@
-namespace AlvorPong.Game.Frontend;
+namespace AlvorPong;
 
 /// <summary>Caches the finite set of score strings used by the per-frame match renderer.</summary>
 [Match]

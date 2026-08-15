@@ -1,4 +1,4 @@
-namespace AlvorPong.Game;
+namespace AlvorPong;
 
 /// <summary>Advances ready paddles from their component movement intent.</summary>
 [Match]

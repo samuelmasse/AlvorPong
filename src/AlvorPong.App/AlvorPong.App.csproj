@@ -4,8 +4,4 @@
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Injection\AlvorKit.Injection.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Using Include="AlvorKit.Injection" />
-    </ItemGroup>
-
 </Project>
