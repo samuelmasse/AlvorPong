@@ -20,16 +20,6 @@ Then build and run:
 dotnet run --project src/AlvorPong
 ```
 
-For Visual Studio, generate the local development solution that includes
-AlvorKit under the `Engine` solution folder:
-
-```
-dotnet run --project ../AlvorKit/scripts/AlvorKit.Script.DevSolution
-```
-
-Open `AlvorPong.Dev.slnx` after generation. The file is ignored because it is
-derived from `AlvorPong.slnx` and the sibling `../AlvorKit/AlvorKit.slnx`.
-
 A fresh AlvorKit clone works without any codegen step — its pinned generated binding packages
 restore from nuget.org, and native DLLs flow into AlvorPong's output through the NuGet runtimes
 targets. If AlvorKit's active generated roots `out/bindgen` or `out/mathgen` exist, those local
@@ -83,7 +73,7 @@ ProjectReferences.
 - Blend's Inter fonts are embedded in `AlvorKit.UI.Blend` (`RootInter`, mirroring `RootRoboto`), so
   this repo ships no font assets. `AppStyle` extends `BlendStyle` with the game's colors and recipes,
   and its generated control chrome is owned by the app-scoped `AppGl` node.
-- `ProjectRoot.ResDirectory` (AlvorKit.Script.Workspace) hardcodes `AlvorKit.slnx` as its root
+- `ProjectRoot.ResDirectory` (AlvorKit.Script.Workspace) uses `AlvorKit.Packages.props` as its root
   marker, so external repos cannot use it for their own `res/`; a consumer with real assets should
   copy them to the output directory and load via `AppContext.BaseDirectory`.
 - `InjectorScope.With(instance)` validates that the seeded instance's type carries the target
@@ -94,3 +84,15 @@ ProjectReferences.
   positions from a frame-0 screenshot will click stale coordinates.
 - Everything else resolves cleanly across repos; see `src/Directory.Build.props` for the
   `$(AlvorKitRoot)` wiring and the sibling-clone existence check.
+
+## Repository solution
+
+From this checkout, generate the gitignored solution from projects and evaluated
+dependencies, then open `AlvorPong.slnx`:
+
+```powershell
+dotnet run --project ../AlvorKit/scripts/AlvorKit.Script.Solution -- --repo-root .
+```
+
+Add `--watch` for continuous updates. See
+[the solution workflow](../AlvorKit/docs/Solutions.md) for discovery and CI.
