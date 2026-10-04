@@ -7,7 +7,7 @@ public class AppPauseMenu(
     AppMatchStart matchStart,
     AppMenuButton button,
     AppMenuReturn menuReturn,
-    AppStyle s)
+    BlendUi bl)
 {
     public void Create(EntMut root, AppPauseView view)
     {
@@ -18,11 +18,11 @@ public class AppPauseMenu(
         const int scoreFontSize = 20;
 
         Node(root, out var layer)
-            .Mutate(s.ModalLayer)
+            .Mutate(bl.S.ModalLayer)
             .OnPressF(view.Resume);
         {
             Node(layer, out var panel)
-                .Mutate(s.ModalPanel)
+                .Mutate(bl.S.ModalPanel)
                 .SizeV((panelWidth, 0))
                 .SizeInnerSumRelativeV((0, 1));
             {
@@ -34,13 +34,13 @@ public class AppPauseMenu(
         void Title(EntMut panel)
         {
             Node(panel, out var title)
-                .Mutate(s.PanelTitle)
+                .Mutate(bl.S.PanelTitle)
                 .InnerLayoutV(InnerLayout.HorizontalList)
                 .InnerSizingV(InnerSizing.HorizontalWeight)
-                .PaddingV(s.Metrics.PanelTitlePadding);
+                .PaddingV(bl.S.Metrics.PanelTitlePadding);
             {
                 Node(title)
-                    .Mutate(s.EmphasisText)
+                    .Mutate(bl.S.EmphasisText)
                     .SizeWeightTypeV(SizeWeightType.Self)
                     .SizeRelativeV((0, 1))
                     .SizeTextRelativeV((1, 0))
@@ -49,12 +49,12 @@ public class AppPauseMenu(
                 Node(title);
 
                 Node(title)
-                    .Mutate(s.MutedText)
+                    .Mutate(bl.S.MutedText)
                     .SizeWeightTypeV(SizeWeightType.Self)
                     .SizeRelativeV((0, 1))
                     .SizeTextRelativeV((1, 0))
                     .TextAlignmentV(Alignment.Right | Alignment.Vertical)
-                    .TextPaddingV((0, 0, s.Metrics.RightGlyphPadding, 0))
+                    .TextPaddingV((0, 0, bl.S.Metrics.RightGlyphPadding, 0))
                     .TextV(ModeText());
             }
         }
@@ -67,11 +67,11 @@ public class AppPauseMenu(
         void Content(EntMut panel)
         {
             Node(panel, out var content)
-                .Mutate(s.ModalContent)
+                .Mutate(bl.S.ModalContent)
                 .SizeWeightTypeV(SizeWeightType.Self)
                 .SizeRelativeV((1, 0))
                 .SizeInnerSumRelativeV((0, 1))
-                .InnerSpacingV(s.Metrics.LooseSpacing);
+                .InnerSpacingV(bl.S.Metrics.LooseSpacing);
             {
                 ScoreReadout(content);
 
@@ -81,7 +81,7 @@ public class AppPauseMenu(
                 button.Create(content, "Quit", null, false, screen.Close);
 
                 Node(content)
-                    .Mutate(s.MutedText)
+                    .Mutate(bl.S.MutedText)
                     .AlignmentV(Alignment.Horizontal)
                     .SizeWeightTypeV(SizeWeightType.Self)
                     .SizeRelativeV((0, 0))
@@ -94,30 +94,30 @@ public class AppPauseMenu(
         void ScoreReadout(EntMut parent)
         {
             Node(parent, out var readout)
-                .Mutate(s.Board)
+                .Mutate(bl.S.Board)
                 .SizeWeightTypeV(SizeWeightType.Self)
                 .SizeRelativeV((1, 0))
                 .SizeV((0, readoutHeight))
-                .ColorV(s.Palette.AppBackground)
-                .Mutate(s.Border);
+                .ColorV(bl.S.Palette.AppBackground)
+                .Mutate(bl.S.Border);
             {
                 Node(readout, out var lines)
-                    .Mutate(s.VerticalList)
+                    .Mutate(bl.S.VerticalList)
                     .AlignmentV(Alignment.Horizontal | Alignment.Vertical)
                     .InnerSpacingV(readoutLineSpacing);
                 {
                     Node(lines, out var numbers)
-                        .Mutate(s.HorizontalList)
+                        .Mutate(bl.S.HorizontalList)
                         .AlignmentV(Alignment.Horizontal)
-                        .InnerSpacingV(s.Metrics.LooseSpacing);
+                        .InnerSpacingV(bl.S.Metrics.LooseSpacing);
                     {
-                        Number(numbers, $"{view.Score.Left}", s.EmphasisLabel);
-                        Number(numbers, ":", s.MutedLabel);
-                        Number(numbers, $"{view.Score.Right}", s.EmphasisLabel);
+                        Number(numbers, $"{view.Score.Left}", bl.S.EmphasisLabel);
+                        Number(numbers, ":", bl.S.MutedLabel);
+                        Number(numbers, $"{view.Score.Right}", bl.S.EmphasisLabel);
                     }
 
                     Node(lines)
-                        .Mutate(s.MutedLabel)
+                        .Mutate(bl.S.MutedLabel)
                         .AlignmentV(Alignment.Horizontal)
                         .TextV(SubText());
                 }

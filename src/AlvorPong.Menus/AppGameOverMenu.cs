@@ -6,6 +6,7 @@ public class AppGameOverMenu(
     AppMatchStart matchStart,
     AppMenuButton button,
     AppMenuReturn menuReturn,
+    BlendUi bl,
     AppStyle s)
 {
     public void Create(EntMut root, AppGameOverView view)
@@ -28,10 +29,10 @@ public class AppGameOverMenu(
         const int colonFontSize = 30;
 
         Node(root, out var layer)
-            .Mutate(s.ModalLayer);
+            .Mutate(bl.S.ModalLayer);
         {
             Node(layer, out var panel)
-                .Mutate(s.ModalPanel)
+                .Mutate(bl.S.ModalPanel)
                 .SizeV((panelWidth, 0))
                 .SizeInnerSumRelativeV((0, 1));
             {
@@ -43,13 +44,13 @@ public class AppGameOverMenu(
         void Title(EntMut panel)
         {
             Node(panel, out var title)
-                .Mutate(s.PanelTitle)
+                .Mutate(bl.S.PanelTitle)
                 .InnerLayoutV(InnerLayout.HorizontalList)
                 .InnerSizingV(InnerSizing.HorizontalWeight)
-                .PaddingV(s.Metrics.PanelTitlePadding);
+                .PaddingV(bl.S.Metrics.PanelTitlePadding);
             {
                 Node(title)
-                    .Mutate(s.EmphasisText)
+                    .Mutate(bl.S.EmphasisText)
                     .SizeWeightTypeV(SizeWeightType.Self)
                     .SizeRelativeV((0, 1))
                     .SizeTextRelativeV((1, 0))
@@ -58,12 +59,12 @@ public class AppGameOverMenu(
                 Node(title);
 
                 Node(title)
-                    .Mutate(s.MutedText)
+                    .Mutate(bl.S.MutedText)
                     .SizeWeightTypeV(SizeWeightType.Self)
                     .SizeRelativeV((0, 1))
                     .SizeTextRelativeV((1, 0))
                     .TextAlignmentV(Alignment.Right | Alignment.Vertical)
-                    .TextPaddingV((0, 0, s.Metrics.RightGlyphPadding, 0))
+                    .TextPaddingV((0, 0, bl.S.Metrics.RightGlyphPadding, 0))
                     .TextV(ModeText());
             }
         }
@@ -76,17 +77,17 @@ public class AppGameOverMenu(
         void Content(EntMut panel)
         {
             Node(panel, out var content)
-                .Mutate(s.ModalContent)
+                .Mutate(bl.S.ModalContent)
                 .SizeWeightTypeV(SizeWeightType.Self)
                 .SizeRelativeV((1, 0))
                 .SizeInnerSumRelativeV((0, 1))
-                .InnerSpacingV(s.Metrics.LooseSpacing);
+                .InnerSpacingV(bl.S.Metrics.LooseSpacing);
             {
-                Line(content, "WINNER", s.MutedText, s.Metrics.MutedFontSize, winnerCapHeight);
-                Line(content, WinnerName(), s.EmphasisText, winnerNameFontSize, winnerNameHeight);
+                Line(content, "WINNER", bl.S.MutedText, bl.S.Metrics.MutedFontSize, winnerCapHeight);
+                Line(content, WinnerName(), bl.S.EmphasisText, winnerNameFontSize, winnerNameHeight);
                 Scoreboard(content);
                 Tape(content);
-                Line(content, "point history — left · right", s.MutedText, s.Metrics.MutedFontSize, captionHeight);
+                Line(content, "point history — left · right", bl.S.MutedText, bl.S.Metrics.MutedFontSize, captionHeight);
 
                 button.Create(content, "Rematch", "Enter", true, () => matchStart.Run(view.Config))
                     .Mutate()
@@ -114,7 +115,7 @@ public class AppGameOverMenu(
         {
             var score = view.Score;
             Node(parent, out var board)
-                .Mutate(s.HorizontalList)
+                .Mutate(bl.S.HorizontalList)
                 .AlignmentV(Alignment.Horizontal)
                 .MarginV((0, boardMarginTop, 0, 0))
                 .InnerSpacingV(numberSpacing);
@@ -122,7 +123,7 @@ public class AppGameOverMenu(
                 NumberColumn(board, score.Left, score.Winner == MatchSide.Left);
 
                 Node(board)
-                    .Mutate(s.MutedText)
+                    .Mutate(bl.S.MutedText)
                     .AlignmentV(Alignment.Top)
                     .SizeRelativeV((0, 0))
                     .SizeTextRelativeV((1, 0))
@@ -137,12 +138,12 @@ public class AppGameOverMenu(
         void NumberColumn(EntMut board, int value, bool winner)
         {
             Node(board, out var column)
-                .Mutate(s.VerticalList)
+                .Mutate(bl.S.VerticalList)
                 .AlignmentV(Alignment.Top)
                 .InnerSpacingV(numberRuleSpacing);
             {
                 Node(column, out var number)
-                    .Mutate(s.EmphasisText)
+                    .Mutate(bl.S.EmphasisText)
                     .AlignmentV(Alignment.Horizontal)
                     .SizeRelativeV((0, 0))
                     .SizeTextRelativeV((1, 0))
@@ -152,21 +153,21 @@ public class AppGameOverMenu(
                 if (!winner)
                 {
                     number.Mutate()
-                        .TextColorV(s.Palette.MutedText);
+                        .TextColorV(bl.S.Palette.MutedText);
                 }
 
                 Node(column)
                     .AlignmentV(Alignment.Horizontal)
                     .SizeRelativeV((0, 0))
-                    .SizeV((numberRuleWidth, s.Metrics.ActiveTabAccentHeight))
-                    .ColorV(winner ? s.Palette.Accent : default);
+                    .SizeV((numberRuleWidth, bl.S.Metrics.ActiveTabAccentHeight))
+                    .ColorV(winner ? bl.S.Palette.Accent : default);
             }
         }
 
         void Tape(EntMut parent)
         {
             Node(parent, out var tape)
-                .Mutate(s.HorizontalList)
+                .Mutate(bl.S.HorizontalList)
                 .AlignmentV(Alignment.Horizontal)
                 .MarginV((0, tapeMarginTop, 0, 0))
                 .InnerSpacingV(tapeSpacing)

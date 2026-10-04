@@ -8,6 +8,7 @@ public class AppMainMenu(
     RootText text,
     AppMatchStart matchStart,
     AppMenuButton button,
+    BlendUi bl,
     AppStyle s)
 {
     public void Create(EntMut root)
@@ -30,7 +31,7 @@ public class AppMainMenu(
         const int captionFontSize = 10;
 
         Node(root, out var panel)
-            .Mutate(s.Root);
+            .Mutate(bl.S.Root);
         {
             Node(panel)
                 .ColorV(default);
@@ -52,8 +53,8 @@ public class AppMainMenu(
                 .SizeInnerSumRelativeV((0, 1))
                 .SizeV((splashWidth, 0))
                 .InnerLayoutV(InnerLayout.VerticalList)
-                .ColorV(s.Palette.Panel)
-                .Mutate(s.StrongBorder);
+                .ColorV(bl.S.Palette.Panel)
+                .Mutate(bl.S.StrongBorder);
             {
                 Banner(splash);
                 Body(splash);
@@ -74,11 +75,11 @@ public class AppMainMenu(
             const float ballSize = 10f;
 
             Node(parent, out var banner)
-                .Mutate(s.Board)
+                .Mutate(bl.S.Board)
                 .SizeRelativeV((1, 0))
                 .SizeV((0, bannerHeight))
-                .ColorV(s.Palette.AppBackground)
-                .Mutate(s.BottomRule);
+                .ColorV(bl.S.Palette.AppBackground)
+                .Mutate(bl.S.BottomRule);
             {
                 for (var i = 0; i < dashCount; i++)
                 {
@@ -94,12 +95,12 @@ public class AppMainMenu(
                 FieldRect(banner, (462, 60), (ballSize, ballSize));
 
                 Node(banner, out var word)
-                    .Mutate(s.VerticalList)
+                    .Mutate(bl.S.VerticalList)
                     .AlignmentV(Alignment.Horizontal | Alignment.Vertical)
                     .InnerSpacingV(wordLineSpacing);
                 {
                     Node(word, out var wordRow)
-                        .Mutate(s.HorizontalList)
+                        .Mutate(bl.S.HorizontalList)
                         .AlignmentV(Alignment.Horizontal)
                         .InnerSpacingV(wordSpacing);
                     {
@@ -107,18 +108,18 @@ public class AppMainMenu(
                             .AlignmentV(Alignment.Vertical)
                             .SizeRelativeV((0, 0))
                             .SizeV((brandmarkSize, brandmarkSize))
-                            .ColorV(s.Palette.ActiveSurface)
+                            .ColorV(bl.S.Palette.ActiveSurface)
                             .Mutate(s.AccentBorder);
 
                         Node(wordRow)
-                            .Mutate(s.EmphasisLabel)
+                            .Mutate(bl.S.EmphasisLabel)
                             .AlignmentV(Alignment.Vertical)
                             .FontSizeV(wordmarkFontSize)
                             .TextV("ALVORPONG");
                     }
 
                     Node(word)
-                        .Mutate(s.MutedLabel)
+                        .Mutate(bl.S.MutedLabel)
                         .AlignmentV(Alignment.Horizontal)
                         .TextV("first to five — Pong on the AlvorKit engine");
                 }
@@ -133,7 +134,7 @@ public class AppMainMenu(
                 .ColorV(s.FieldFaint);
 
         float ActionColumnHeight() =>
-            4 * s.Metrics.ButtonHeight + 4 * s.Metrics.LooseSpacing + s.Metrics.Hairline;
+            4 * bl.S.Metrics.ButtonHeight + 4 * bl.S.Metrics.LooseSpacing + bl.S.Metrics.Hairline;
 
         void Body(EntMut parent)
         {
@@ -152,18 +153,18 @@ public class AppMainMenu(
         void Actions(EntMut parent)
         {
             Node(parent, out var actions)
-                .Mutate(s.VerticalList)
+                .Mutate(bl.S.VerticalList)
                 .SizeInnerMaxRelativeV((0, 0))
                 .SizeV((actionColumnWidth, 0))
-                .InnerSpacingV(s.Metrics.LooseSpacing);
+                .InnerSpacingV(bl.S.Metrics.LooseSpacing);
             {
                 button.Create(actions, "Play vs AI", "Enter", true, () => matchStart.Run(new MatchConfig(RightIsAi: true)));
                 button.Create(actions, "Play two players", "T", false, () => matchStart.Run(new MatchConfig(RightIsAi: false)));
 
                 Node(actions)
                     .SizeRelativeV((1, 0))
-                    .SizeV((0, s.Metrics.Hairline))
-                    .ColorV(s.Palette.Border);
+                    .SizeV((0, bl.S.Metrics.Hairline))
+                    .ColorV(bl.S.Palette.Border);
 
                 button.Create(actions, "Toggle fullscreen", null, false, screen.ToggleFullscreen);
                 button.Create(actions, "Quit", "Esc", false, screen.Close);
@@ -178,8 +179,8 @@ public class AppMainMenu(
                 .SizeV((width, ActionColumnHeight()))
                 .InnerLayoutV(InnerLayout.VerticalList)
                 .PaddingV((controlsPaddingX, controlsPaddingY, controlsPaddingX, controlsPaddingY))
-                .ColorV(s.Palette.AppBackground)
-                .Mutate(s.Border);
+                .ColorV(bl.S.Palette.AppBackground)
+                .Mutate(bl.S.Border);
             {
                 Node(card, out var caption)
                     .SizeRelativeV((1, 0))
@@ -201,7 +202,7 @@ public class AppMainMenu(
 
         void CaptionLabel(EntMut parent, string value) =>
             Node(parent)
-                .Mutate(s.MutedLabel)
+                .Mutate(bl.S.MutedLabel)
                 .AlignmentV(Alignment.Vertical)
                 .SizeWeightTypeV(SizeWeightType.Self)
                 .FontSizeV(captionFontSize)
@@ -210,11 +211,11 @@ public class AppMainMenu(
         EntMut ControlRow(EntMut parent, string label)
         {
             Node(parent, out var row)
-                .Mutate(s.MetricRow)
+                .Mutate(bl.S.MetricRow)
                 .SizeV((0, controlRowHeight));
             {
                 Node(row)
-                    .Mutate(s.MutedLabel)
+                    .Mutate(bl.S.MutedLabel)
                     .AlignmentV(Alignment.Left | Alignment.Vertical)
                     .TextV(label);
             }
@@ -226,10 +227,10 @@ public class AppMainMenu(
         {
             var row = ControlRow(parent, label);
             Node(row, out var value)
-                .Mutate(s.HorizontalList)
+                .Mutate(bl.S.HorizontalList)
                 .AlignmentV(Alignment.Left | Alignment.Vertical)
                 .OffsetV((controlValueColumn, 0))
-                .InnerSpacingV(s.Metrics.CompactSpacing);
+                .InnerSpacingV(bl.S.Metrics.CompactSpacing);
             {
                 Node(value)
                     .Mutate(s.KeyChip)
@@ -239,7 +240,7 @@ public class AppMainMenu(
                 if (secondKey != null)
                 {
                     Node(value)
-                        .Mutate(s.MutedLabel)
+                        .Mutate(bl.S.MutedLabel)
                         .AlignmentV(Alignment.Vertical)
                         .TextV("/");
 
@@ -255,7 +256,7 @@ public class AppMainMenu(
         {
             var row = ControlRow(parent, label);
             Node(row)
-                .Mutate(s.MutedLabel)
+                .Mutate(bl.S.MutedLabel)
                 .AlignmentV(Alignment.Left | Alignment.Vertical)
                 .OffsetV((controlValueColumn, 0))
                 .TextV(value);
@@ -269,7 +270,7 @@ public class AppMainMenu(
                 .InnerLayoutV(InnerLayout.HorizontalList)
                 .InnerSizingV(InnerSizing.HorizontalWeight)
                 .PaddingV((footerTextPadding, 0, footerTextPadding, 0))
-                .Mutate(s.TopRule);
+                .Mutate(bl.S.TopRule);
             {
                 FooterLabel(footer, "AlvorPong 0.1 · AlvorKit sample");
                 Node(footer);
@@ -279,7 +280,7 @@ public class AppMainMenu(
 
         void FooterLabel(EntMut parent, string value) =>
             Node(parent)
-                .Mutate(s.MutedLabel)
+                .Mutate(bl.S.MutedLabel)
                 .AlignmentV(Alignment.Vertical)
                 .SizeWeightTypeV(SizeWeightType.Self)
                 .TextV(value);
@@ -287,14 +288,14 @@ public class AppMainMenu(
         void StatusBar(EntMut parent)
         {
             Node(parent, out var status)
-                .Mutate(s.StatusBar)
-                .PaddingV(s.Metrics.StatusBarPadding);
+                .Mutate(bl.S.StatusBar)
+                .PaddingV(bl.S.Metrics.StatusBarPadding);
             {
                 Node(status, out var items)
                     .SizeRelativeV((1, 1))
                     .InnerLayoutV(InnerLayout.HorizontalList)
                     .InnerSizingV(InnerSizing.HorizontalWeight)
-                    .InnerSpacingV(s.Metrics.StatusSpacing);
+                    .InnerSpacingV(bl.S.Metrics.StatusSpacing);
                 {
                     Item(items, true, () => text.Format("{0} FPS", metrics.FrameWindow.Ticks));
                     Item(items, false, () => "menu");
@@ -306,7 +307,7 @@ public class AppMainMenu(
 
         void Item(EntMut parent, bool emphasis, Func<ReadOnlySpan<char>> value) =>
             Node(parent)
-                .Mutate(emphasis ? s.EmphasisLabel : s.MutedLabel)
+                .Mutate(emphasis ? bl.S.EmphasisLabel : bl.S.MutedLabel)
                 .AlignmentV(Alignment.Vertical)
                 .SizeWeightTypeV(SizeWeightType.Self)
                 .TextF(value);

@@ -11,7 +11,7 @@ public class MatchState(
     RootUi ui,
     RootUiScript uiScript,
     AppPauseMenu pauseMenu,
-    AppStyle s,
+    BlendUi bl,
     MatchScope scope,
     MatchConfig config,
     MatchInput input,
@@ -81,7 +81,7 @@ public class MatchState(
 
     public override void Draw() => renderer.Draw();
 
-    public override void Render() => backbuffer.Clear(s.Palette.AppBackground);
+    public override void Render() => backbuffer.Clear(bl.S.Palette.AppBackground);
 
     private void ShowPauseMenu()
     {

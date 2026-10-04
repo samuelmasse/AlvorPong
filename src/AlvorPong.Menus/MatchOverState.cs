@@ -12,7 +12,7 @@ public class MatchOverState(
     AppGameOverMenu menu,
     AppMatchStart matchStart,
     AppMenuReturn menuReturn,
-    AppStyle s,
+    BlendUi bl,
     MatchConfig config,
     MatchRenderer renderer,
     MatchScore score,
@@ -53,5 +53,5 @@ public class MatchOverState(
 
     public override void Draw() => renderer.Draw();
 
-    public override void Render() => backbuffer.Clear(s.Palette.AppBackground);
+    public override void Render() => backbuffer.Clear(bl.S.Palette.AppBackground);
 }

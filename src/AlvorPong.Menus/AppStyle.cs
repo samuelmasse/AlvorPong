@@ -2,8 +2,7 @@ namespace AlvorPong;
 
 /// <summary>Application style: the Blend design system plus AlvorPong's game-local recipes and colors.</summary>
 [App]
-public class AppStyle(RootInter inter, RootUiScale scale, RootKeyboard keyboard, AppGl gl)
-    : BlendStyle(inter, gl, scale, keyboard)
+public class AppStyle(BlendUi bl)
 {
     private const float KeyChipHeight = 16f;
     private const float KeyChipTextPadding = 5f;
@@ -20,28 +19,28 @@ public class AppStyle(RootInter inter, RootUiScale scale, RootKeyboard keyboard,
     public Vec4 TapeLeftPoint => tapeLeftPoint;
 
     /// <summary>Gets the point-tape color for points won by the right player.</summary>
-    public Vec4 TapeRightPoint => Palette.WithAlpha(Palette.MutedText, 0.4f);
+    public Vec4 TapeRightPoint => bl.S.Palette.WithAlpha(bl.S.Palette.MutedText, 0.4f);
 
     /// <summary>Applies a small display-only key cap, sized from its text.</summary>
     public void KeyChip(EntMut ent) => ent.Mutate()
-        .Mutate(Board)
+        .Mutate(bl.S.Board)
         .SizeRelativeV((0, 0))
         .SizeTextRelativeV((1, 0))
         .SizeV((0, KeyChipHeight))
-        .FontV(TextFont)
+        .FontV(bl.S.TextFont)
         .FontSizeV(KeyChipFontSize)
         .TextPaddingV((KeyChipTextPadding, 0, KeyChipTextPadding, 0))
         .TextAlignmentV(Alignment.Center)
-        .TextColorV(Palette.MutedText)
-        .ColorV(Palette.Raised)
-        .Mutate(StrongBorder);
+        .TextColorV(bl.S.Palette.MutedText)
+        .ColorV(bl.S.Palette.Raised)
+        .Mutate(bl.S.StrongBorder);
 
     /// <summary>Adds a one-pixel accent border around a node.</summary>
     public void AccentBorder(EntMut ent)
     {
-        Rule(ent, Alignment.Top | Alignment.Left, (1, 0), (0, Metrics.Hairline), Palette.Accent);
-        Rule(ent, Alignment.Bottom | Alignment.Left, (1, 0), (0, Metrics.Hairline), Palette.Accent);
-        Rule(ent, Alignment.Top | Alignment.Left, (0, 1), (Metrics.Hairline, 0), Palette.Accent);
-        Rule(ent, Alignment.Top | Alignment.Right, (0, 1), (Metrics.Hairline, 0), Palette.Accent);
+        BlendStyle.Rule(ent, Alignment.Top | Alignment.Left, (1, 0), (0, bl.S.Metrics.Hairline), bl.S.Palette.Accent);
+        BlendStyle.Rule(ent, Alignment.Bottom | Alignment.Left, (1, 0), (0, bl.S.Metrics.Hairline), bl.S.Palette.Accent);
+        BlendStyle.Rule(ent, Alignment.Top | Alignment.Left, (0, 1), (bl.S.Metrics.Hairline, 0), bl.S.Palette.Accent);
+        BlendStyle.Rule(ent, Alignment.Top | Alignment.Right, (0, 1), (bl.S.Metrics.Hairline, 0), bl.S.Palette.Accent);
     }
 }

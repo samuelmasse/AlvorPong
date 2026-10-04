@@ -12,7 +12,7 @@ public class AppMenuState(
     AppAudio audio,
     AppMainMenu menu,
     AppMatchStart matchStart,
-    AppStyle s) : State
+    BlendUi bl) : State
 {
     private EntMut menuNode;
 
@@ -54,5 +54,5 @@ public class AppMenuState(
         }
     }
 
-    public override void Render() => backbuffer.Clear(s.Palette.AppBackground);
+    public override void Render() => backbuffer.Clear(bl.S.Palette.AppBackground);
 }
