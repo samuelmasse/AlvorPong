@@ -2,10 +2,10 @@ namespace AlvorPong;
 
 /// <summary>Registers maintained Ent bags and publishes the initialized match Ents.</summary>
 [MatchLoader]
-public sealed class MatchEntLoader(
-    MatchEntIdxContextBuilder context,
-    MatchPaddleBagMut paddles,
-    MatchBallBagMut balls,
+public class MatchEntLoader(
+    MatchEntIdxContext context,
+    MatchPaddleBag paddles,
+    MatchBallBag balls,
     MatchEntLifetime ents)
 {
     /// <summary>Completes Indexed registration before the first Ent allocation.</summary>

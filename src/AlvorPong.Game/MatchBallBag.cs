@@ -2,5 +2,5 @@ namespace AlvorPong;
 
 /// <summary>Read surface for the maintained set of initialized balls.</summary>
 [Match]
-public sealed class MatchBallBag(MatchBallBagMut bag) :
-    EntIdxGatedBag<MatchEntComponents.IsBall, MatchEntComponents.IsReady>(bag);
+public class MatchBallBag :
+    EntIdxGatedBag<MatchEntComponents.IsBall, MatchEntComponents.IsReady>;
