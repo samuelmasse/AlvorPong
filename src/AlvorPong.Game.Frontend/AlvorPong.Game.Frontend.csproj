@@ -2,9 +2,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\AlvorPong.Game\AlvorPong.Game.csproj" />
-        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Engine\AlvorKit.Engine.csproj" />
-        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Graphics2D\AlvorKit.Graphics2D.csproj" />
-        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Graphics2D.Fonts\AlvorKit.Graphics2D.Fonts.csproj" />
+        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Engine.Frontend\AlvorKit.Engine.Frontend.csproj" />
     </ItemGroup>
 
 </Project>

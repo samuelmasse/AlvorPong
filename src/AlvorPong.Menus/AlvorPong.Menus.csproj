@@ -7,7 +7,6 @@
         <ProjectReference Include="..\AlvorPong.Game.Frontend\AlvorPong.Game.Frontend.csproj" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.ECS.Generator\AlvorKit.ECS.Generator.csproj"
             OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Engine.Loop\AlvorKit.Engine.Loop.csproj" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Graphics2D\AlvorKit.Graphics2D.csproj" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Injection\AlvorKit.Injection.csproj" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.UI\AlvorKit.UI.csproj" />
