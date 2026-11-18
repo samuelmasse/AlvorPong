@@ -5,14 +5,12 @@ namespace AlvorPong;
 public class MatchOverState(
     RootBackbuffer backbuffer,
     RootKeyboard keyboard,
-    RootScripts scripts,
     RootUi ui,
-    RootUiScript uiScript,
     AppAudio audio,
     AppGameOverMenu menu,
     AppMatchStart matchStart,
     AppMenuReturn menuReturn,
-    BlendUi bl,
+    AppBlendUi bl,
     MatchConfig config,
     MatchRenderer renderer,
     MatchScore score,
@@ -22,8 +20,7 @@ public class MatchOverState(
 
     public override void Load()
     {
-        scripts.Add(uiScript);
-        menuNode = Node(ui)
+        menuNode = Node(ui.Default.Root)
             .SizeRelativeV((1, 1));
         {
             menu.Create(menuNode, new AppGameOverView(config, score));
@@ -32,8 +29,8 @@ public class MatchOverState(
 
     public override void Unload()
     {
-        NodesRemove(ui, menuNode);
-        scripts.Remove(uiScript);
+        NodesRemove(ui.Default.Root, menuNode);
+        ui.Mouse.Release();
         ents.Unload();
     }
 

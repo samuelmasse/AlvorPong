@@ -6,12 +6,10 @@ public class MatchState(
     RootBackbuffer backbuffer,
     RootKeyboard keyboard,
     RootScreen screen,
-    RootScripts scripts,
     RootState state,
     RootUi ui,
-    RootUiScript uiScript,
     AppPauseMenu pauseMenu,
-    BlendUi bl,
+    AppBlendUi bl,
     MatchScope scope,
     MatchConfig config,
     MatchInput input,
@@ -87,8 +85,7 @@ public class MatchState(
     {
         audio.PauseIn();
         paused = true;
-        scripts.Add(uiScript);
-        pauseNode = Node(ui)
+        pauseNode = Node(ui.Default.Root)
             .SizeRelativeV((1, 1));
         {
             pauseMenu.Create(pauseNode, new AppPauseView(config, score, () => HidePauseMenu()));
@@ -104,9 +101,9 @@ public class MatchState(
             audio.PauseOut();
 
         paused = false;
-        NodesRemove(ui, pauseNode);
+        NodesRemove(ui.Default.Root, pauseNode);
         pauseNode = default;
-        scripts.Remove(uiScript);
+        ui.Mouse.Release();
     }
 
     private float Axis(Keys up, Keys down) =>

@@ -6,13 +6,11 @@ public class AppMenuState(
     RootBackbuffer backbuffer,
     RootKeyboard keyboard,
     RootScreen screen,
-    RootScripts scripts,
     RootUi ui,
-    RootUiScript uiScript,
     AppAudio audio,
     AppMainMenu menu,
     AppMatchStart matchStart,
-    BlendUi bl) : State
+    AppBlendUi bl) : State
 {
     private EntMut menuNode;
 
@@ -20,8 +18,7 @@ public class AppMenuState(
     {
         screen.Title = "AlvorPong";
         screen.IsVSyncEnabled = true;
-        scripts.Add(uiScript);
-        menuNode = Node(ui)
+        menuNode = Node(ui.Default.Root)
             .SizeRelativeV((1, 1));
         {
             menu.Create(menuNode);
@@ -31,8 +28,8 @@ public class AppMenuState(
 
     public override void Unload()
     {
-        NodesRemove(ui, menuNode);
-        scripts.Remove(uiScript);
+        NodesRemove(ui.Default.Root, menuNode);
+        ui.Mouse.Release();
     }
 
     public override void Update(double delta)

@@ -8,7 +8,7 @@ public class AppMainMenu(
     RootText text,
     AppMatchStart matchStart,
     AppMenuButton button,
-    BlendUi bl,
+    AppBlendUi bl,
     AppStyle s)
 {
     public void Create(EntMut root)

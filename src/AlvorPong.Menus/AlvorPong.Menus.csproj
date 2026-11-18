@@ -9,8 +9,7 @@
             OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Graphics2D\AlvorKit.Graphics2D.csproj" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Injection\AlvorKit.Injection.csproj" />
-        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.UI\AlvorKit.UI.csproj" />
-        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.UI.Blend\AlvorKit.UI.Blend.csproj" />
+        <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.Engine.UI.Blend\AlvorKit.Engine.UI.Blend.csproj" />
         <ProjectReference Include="$(AlvorKitRoot)src\AlvorKit.UI.Generator\AlvorKit.UI.Generator.csproj"
             OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>

@@ -6,7 +6,7 @@ public class AppGameOverMenu(
     AppMatchStart matchStart,
     AppMenuButton button,
     AppMenuReturn menuReturn,
-    BlendUi bl,
+    AppBlendUi bl,
     AppStyle s)
 {
     public void Create(EntMut root, AppGameOverView view)

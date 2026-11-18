@@ -2,7 +2,7 @@ namespace AlvorPong;
 
 /// <summary>Application style: the Blend design system plus AlvorPong's game-local recipes and colors.</summary>
 [App]
-public class AppStyle(BlendUi bl)
+public class AppStyle(AppBlendUi bl)
 {
     private const float KeyChipHeight = 16f;
     private const float KeyChipTextPadding = 5f;

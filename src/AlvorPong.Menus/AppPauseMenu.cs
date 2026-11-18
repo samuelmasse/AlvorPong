@@ -7,7 +7,7 @@ public class AppPauseMenu(
     AppMatchStart matchStart,
     AppMenuButton button,
     AppMenuReturn menuReturn,
-    BlendUi bl)
+    AppBlendUi bl)
 {
     public void Create(EntMut root, AppPauseView view)
     {

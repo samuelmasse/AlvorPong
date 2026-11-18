@@ -1,1 +1,1 @@
-RootLoop.RunGlfw<AlvorPong.RootLoadState>();
+RootLoop.RunGlfw<AlvorPong.RootLoadState>(new UiSetup());
